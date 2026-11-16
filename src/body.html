@@ -1,0 +1,285 @@
+<div id="banner-storage" class="hidden">⚠ Preview mode — data resets when you refresh. Download this file and open it in Chrome/Edge for permanent data storage &amp; thermal printing.</div>
+
+<!-- ================= LOGIN ================= -->
+<section id="screen-login" class="screen active">
+  <div class="login-card">
+    <div class="login-left">
+      <img id="login-hero" class="hero-img" alt="">
+      <div class="hero-grad"></div>
+      <div class="hero-in">
+        <div id="login-logo-wrap"></div>
+        <h1 id="login-title">Prashadam</h1>
+        <p id="login-tag">Smart billing &amp; restaurant management — thermal printing, live stock tracking, and sales analytics in one place.</p>
+      </div>
+    </div>
+    <div class="login-right">
+      <h2>Welcome 👋</h2>
+      <div class="sub">Sign in to your terminal to continue</div>
+      <div class="role-tabs">
+        <button type="button" id="login-tab-billing" class="on">🧾 Billing Staff</button>
+        <button type="button" id="login-tab-admin">🛡️ Admin Panel</button>
+      </div>
+      <form id="login-form" autocomplete="off">
+        <div id="login-err" class="login-err hidden"></div>
+        <div class="field" style="margin-bottom:14px">
+          <label>Username</label>
+          <input id="login-u" placeholder="Enter username" required>
+        </div>
+        <div class="field" style="margin-bottom:20px">
+          <label>Password</label>
+          <input id="login-p" type="password" placeholder="Enter password" required>
+        </div>
+        <button class="btn btn-pri btn-lg btn-block" type="submit">Sign In →</button>
+      </form>
+      <div class="demo-creds">
+        🔑 Demo logins:<br>
+        Admin — <b>admin</b> / <b>admin123</b><button type="button" class="dc-btn" id="fill-admin">use</button><br>
+        Billing — <b>billing</b> / <b>billing123</b><button type="button" class="dc-btn" id="fill-billing">use</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POS / BILLING ================= -->
+<section id="screen-pos" class="screen">
+  <header class="top-bar">
+    <div class="brand"><div id="pos-logo-wrap"></div><div><b id="pos-brand-name">Prashadam</b><small>Billing Terminal</small></div></div>
+    <div class="spacer"></div>
+    <div id="pos-clock"><b>--:--:--</b><br><span>—</span></div>
+    <button class="icon-btn" id="bell-btn-pos" title="Notifications">🔔<span class="bell-dot hidden" id="bell-badge-pos">0</span></button>
+    <button class="btn btn-ghost btn-sm hidden" id="btn-admin-panel">🛡️ Admin Panel</button>
+    <div class="user-pill"><div class="av" id="pos-av">?</div><div><b id="pos-user">—</b><small>Billing</small></div></div>
+    <button class="btn btn-ghost btn-sm" id="btn-logout-pos">Logout</button>
+  </header>
+  <div class="pos-body">
+    <div class="pos-main">
+      <div class="pos-filters">
+        <div class="search-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="menu-search" placeholder="Search 100+ dishes… (e.g. biryani, dosa)">
+        </div>
+        <div class="cat-chips" id="cat-chips"></div>
+      </div>
+      <div id="menu-grid" class="menu-grid"></div>
+    </div>
+    <aside class="cart-panel" id="cart-panel">
+      <div class="cart-h"><h3>🛒 Current Order</h3><div style="display:flex;gap:7px;align-items:center"><button class="btn btn-ghost btn-sm" id="btn-clearcart">Clear</button><button class="x cb-close" id="btn-close-cart" title="Close cart">✕</button></div></div>
+      <div style="padding:14px 16px 0">
+        <div class="seg" id="ot-seg">
+          <button data-type="Dine-In" class="on"><span>🍽️</span>Dine-In</button>
+          <button data-type="Parcel"><span>🛍️</span>Parcel</button>
+          <button data-type="Pack"><span>📦</span>Pack</button>
+        </div>
+        <div class="order-fields" id="order-fields"></div>
+      </div>
+      <div class="cart-scroll" id="cart-lines"></div>
+      <div class="cart-sum">
+        <div class="sum-row"><span>Subtotal</span><span id="cart-sub">₹0</span></div>
+        <div class="sum-row"><span id="cart-gst-l">GST (5%)</span><span id="cart-gst">₹0</span></div>
+        <div class="sum-row"><span>Round off</span><span id="cart-roff">₹0.00</span></div>
+        <div class="sum-row total"><span>TOTAL</span><span id="cart-total">₹0</span></div>
+      </div>
+      <div class="cart-actions">
+        <div class="seg" id="pay-seg">
+          <button data-pay="Cash" class="on"><span>💵</span>Cash</button>
+          <button data-pay="UPI"><span>📱</span>UPI</button>
+          <button data-pay="Card"><span>💳</span>Card</button>
+        </div>
+        <button class="btn btn-pri btn-lg btn-block" id="btn-genbill">⚡ Generate Bill &amp; Print</button>
+      </div>
+    </aside>
+  </div>
+  <div id="cart-backdrop"></div>
+  <div id="cartbar" class="hidden">
+    <button id="cartbar-btn" type="button">
+      <span class="cb-count" id="cb-count">0</span>
+      <span class="cb-mid"><b id="cb-items">0 items</b><span id="cb-total">₹0</span></span>
+      <span class="cb-cta">View Order <b>›</b></span>
+    </button>
+  </div>
+</section>
+
+<!-- ================= ADMIN ================= -->
+<section id="screen-admin" class="screen">
+  <aside class="adm-side">
+    <div class="adm-brand"><div id="adm-logo-wrap"></div><div><b id="adm-brand-name">Prashadam</b><small>Admin Panel</small></div></div>
+    <div class="nav-lab">Main</div>
+    <button class="nav-btn on" data-page="dash"><span>📊</span>Dashboard</button>
+    <button class="nav-btn" data-page="bills"><span>🧾</span>Bills &amp; Revenue</button>
+    <div class="nav-lab">Inventory</div>
+    <button class="nav-btn" data-page="stock"><span>📦</span>Products &amp; Stock</button>
+    <button class="nav-btn" data-page="addprod"><span>➕</span>Add Product</button>
+    <div class="nav-lab">System</div>
+    <button class="nav-btn" data-page="settings"><span>⚙️</span>Settings</button>
+    <div class="side-foot">
+      <button class="nav-btn" id="btn-go-pos"><span>⚡</span>Go to Billing</button>
+      <button class="nav-btn" id="btn-logout-adm"><span>🚪</span>Logout</button>
+    </div>
+  </aside>
+  <div class="adm-wrap">
+    <header class="top-bar">
+      <div class="spacer"></div>
+      <button class="icon-btn" id="bell-btn-adm" title="Notifications">🔔<span class="bell-dot hidden" id="bell-badge-adm">0</span></button>
+      <div class="user-pill"><div class="av" id="adm-av">A</div><div><b id="adm-user">Admin</b><small>Administrator</small></div></div>
+    </header>
+    <main class="adm-content">
+
+      <!-- DASHBOARD -->
+      <div class="page on" id="page-dash">
+        <div class="page-title">📊 Dashboard <span class="mut" id="dash-date"></span></div>
+        <div class="stat-grid">
+          <div class="stat"><div class="si" style="background:rgba(217,161,63,.16)">💰</div><div><div class="sv" id="st-today-rev">₹0</div><div class="sl">Today's Revenue</div></div></div>
+          <div class="stat"><div class="si" style="background:rgba(94,157,255,.14)">🧾</div><div><div class="sv" id="st-today-bills">0</div><div class="sl">Bills Today</div></div></div>
+          <div class="stat"><div class="si" style="background:rgba(55,178,77,.14)">📈</div><div><div class="sv" id="st-total-rev">₹0</div><div class="sl">Total Revenue (all time)</div></div></div>
+          <div class="stat clickable" id="st-low-click"><div class="si" style="background:rgba(255,107,107,.14)">📉</div><div><div class="sv" id="st-low" style="color:var(--red)">0</div><div class="sl">Low Stock Items</div></div></div>
+        </div>
+        <div class="dash-cols">
+          <div class="panel">
+            <h3>📅 Revenue — last 7 days</h3>
+            <div id="chart7"></div>
+          </div>
+          <div class="panel">
+            <h3>🏆 Best Selling Products <span class="right">by quantity</span></h3>
+            <div id="best-list"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <h3>🕒 Recent Bills <span class="right">latest 5</span></h3>
+          <div class="tbl-wrap" style="box-shadow:none;border-radius:0"><table class="tbl recent-mini" id="recent-bills"></table></div>
+        </div>
+      </div>
+
+      <!-- BILLS -->
+      <div class="page" id="page-bills">
+        <div class="page-title">🧾 Bills &amp; Revenue <span class="mut" id="bills-summary"></span></div>
+        <div class="filters-row">
+          <input type="search" id="bill-search" placeholder="🔎 Track a bill by Bill ID — e.g. BILL-1001" style="min-width:280px;flex:1;max-width:420px">
+          <select id="bill-filter"><option value="all">All bills</option><option value="today">Today only</option><option value="cancelled">Cancelled only</option></select>
+        </div>
+        <div class="tbl-wrap"><table class="tbl" id="bills-tbl"></table></div>
+      </div>
+
+      <!-- STOCK -->
+      <div class="page" id="page-stock">
+        <div class="page-title">📦 Products &amp; Stock <span class="mut" id="stock-count"></span></div>
+        <div class="filters-row">
+          <input type="search" id="stk-search" placeholder="🔎 Search product…" style="min-width:220px">
+          <select id="stk-cat"></select>
+          <label class="chk"><input type="checkbox" id="stk-low"> Low stock only ⚠️</label>
+        </div>
+        <div class="tbl-wrap"><table class="tbl" id="stock-tbl"></table></div>
+      </div>
+
+      <!-- ADD / EDIT PRODUCT -->
+      <div class="page" id="page-addprod">
+        <div class="page-title" id="pf-title">➕ Add New Product</div>
+        <form id="pform" autocomplete="off">
+          <div id="pf-err" class="form-err hidden"></div>
+          <div class="form-card">
+            <div class="form-grid">
+              <div class="field full"><label>Product name *</label><input id="pf-name" placeholder="e.g. Paneer Butter Masala" maxlength="60"></div>
+              <div class="field"><label>Category *</label><input id="pf-cat" list="cat-list" placeholder="e.g. Main Course"><datalist id="cat-list"></datalist></div>
+              <div class="field"><label>Food type</label><select id="pf-veg"><option value="1">🟢 Veg</option><option value="0">🔴 Non-Veg</option></select></div>
+              <div class="field"><label>Emoji icon</label><select id="pf-emoji"></select></div>
+              <div class="field"><label>Low stock alert below (qty) *</label><input id="pf-threshold" type="number" min="0" value="10"></div>
+              <div class="field full"><label>Product photo (optional)</label>
+                <div class="img-up">
+                  <div class="img-prev" id="pf-img-prev"><span>🍽️</span></div>
+                  <div class="iu-b">
+                    <button type="button" class="btn btn-ghost btn-sm" id="pf-img-btn">📁 Upload image</button>
+                    <button type="button" class="btn btn-danger btn-sm hidden" id="pf-img-clear">Remove image</button>
+                    <input type="file" id="pf-img-file" accept="image/*" class="hidden">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-card" style="margin-top:16px">
+            <h3 style="font-size:15.5px;margin-bottom:4px">Quantity options, price &amp; stock *</h3>
+            <div class="pfi-hint">Choose how this dish is sold — e.g. <b>Half / Full</b>, <b>Small / Large</b>, <b>Piece</b>, <b>Plate</b>, <b>Cup</b>… Set a price and stock quantity for each option.</div>
+            <div id="pf-items"></div>
+            <button type="button" class="btn btn-ghost btn-sm" id="btn-pf-additem">＋ Add quantity option</button>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-pri btn-lg" id="btn-pf-save">💾 Save Product</button>
+            <button type="button" class="btn btn-ghost btn-lg" id="btn-pf-cancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="page" id="page-settings">
+        <div class="page-title">⚙️ Settings</div>
+        <div class="form-card">
+          <div class="settings-grid">
+            <div class="field"><label>Restaurant name</label><input id="set-name"></div>
+            <div class="field"><label>Phone</label><input id="set-phone"></div>
+            <div class="field full"><label>Address (printed on bill)</label><input id="set-addr"></div>
+            <div class="field"><label>GSTIN</label><input id="set-gstin"></div>
+            <div class="field"><label>GST % </label><input id="set-gst" type="number" min="0" step="0.5"></div>
+            <div class="field"><label>Thermal paper width</label><select id="set-paper"><option value="80">80 mm</option><option value="58">58 mm</option></select></div>
+            <div class="field"><label>Bill footer message</label><input id="set-footer"></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-pri btn-lg" id="btn-set-save" type="button">💾 Save Settings</button></div>
+        </div>
+        <div class="form-card danger-zone">
+          <h4>⚠️ Danger zone</h4>
+          <p>Reset everything back to fresh demo data (100 dishes + sample bills). All your bills, stock changes and added products will be lost.</p>
+          <button class="btn btn-danger" id="btn-reset-demo" type="button">🔄 Reset Demo Data</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</section>
+
+<!-- ================= MODALS ================= -->
+<div class="modal-back hidden" id="modal-item"><div class="modal">
+  <div class="modal-h"><h3 id="mi-title">Select Item</h3><button class="x" onclick="closeModal('modal-item')">✕</button></div>
+  <div class="mi-media"><div class="mi-emoji" id="mi-img">🍽️</div>
+    <div><div style="display:flex;align-items:center;gap:8px"><span id="mi-veg"></span><b id="mi-cat" class="mut" style="font-size:12px"></b></div>
+    <div style="font-size:19px;font-weight:800;margin-top:4px" id="mi-name">—</div>
+    <div class="mut" style="font-size:12.5px;margin-top:4px" id="mi-stock-note"></div></div>
+  </div>
+  <div class="mi-opts" id="mi-opts"></div>
+  <div class="mi-qty">
+    <b>Quantity</b>
+    <div class="stepper"><button id="mi-minus">−</button><b id="mi-qty">1</b><button id="mi-plus">＋</button></div>
+  </div>
+  <div style="padding:0 22px 22px"><button class="btn btn-pri btn-lg btn-block" id="btn-mi-add">🛒 Add to Order</button></div>
+</div></div>
+
+<div class="modal-back hidden" id="modal-bill"><div class="modal">
+  <div class="modal-h"><h3 id="mb-title">Bill Receipt</h3><button class="x" onclick="closeModal('modal-bill')">✕</button></div>
+  <div class="modal-b" id="mb-body"></div>
+  <div class="bill-actions">
+    <div class="paper-toggle" id="paper-toggle"><button data-paper="58">58mm</button><button data-paper="80" class="on">80mm</button></div>
+    <div class="spacer" style="flex:1"></div>
+    <button class="btn btn-danger btn-sm" id="btn-bill-cancel">Cancel Bill</button>
+    <button class="btn btn-dark" id="btn-bill-print">🖨️ Print</button>
+  </div>
+</div></div>
+
+<div class="modal-back hidden" id="modal-restock"><div class="modal" style="max-width:420px">
+  <div class="modal-h"><h3>📥 Restock</h3><button class="x" onclick="closeModal('modal-restock')">✕</button></div>
+  <div class="modal-b">
+    <p style="font-size:14px;font-weight:700;margin-bottom:14px" id="rs-prod">—</p>
+    <div class="field" style="margin-bottom:14px"><label>Quantity option</label><select id="rs-item"></select></div>
+    <div class="field" style="margin-bottom:18px"><label>Add stock (qty)</label><input id="rs-qty" type="number" min="1" value="10"></div>
+    <button class="btn btn-pri btn-block" id="btn-rs-add">Add to Stock</button>
+  </div>
+</div></div>
+
+<div class="modal-back hidden" id="modal-confirm"><div class="modal" style="max-width:400px">
+  <div class="modal-h"><h3>Confirm</h3></div>
+  <div class="modal-b"><p id="cf-msg" style="font-size:14px;line-height:1.6">Are you sure?</p></div>
+  <div class="bill-actions"><div style="flex:1"></div><button class="btn btn-ghost" id="btn-cf-no">No</button><button class="btn btn-pri" id="btn-cf-ok">Yes, continue</button></div>
+</div></div>
+
+<div id="bell-drop" class="hidden">
+  <div class="bd-h">🔔 Notifications <span><button class="btn btn-ghost btn-sm" id="btn-bell-read">Mark all read</button><button class="btn btn-ghost btn-sm" id="btn-bell-clear">Clear</button></span></div>
+  <div id="bell-list"></div>
+</div>
+
+<div id="toasts"></div>
+<div id="print-area"></div>
